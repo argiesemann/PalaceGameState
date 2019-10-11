@@ -13,6 +13,12 @@ public class Pair
 		this.location = location;
 	}
 
+	public Pair(Pair that)
+	{
+		this.card = new Card(that.card);
+		this.location = that.location;
+	}
+
 	public Card get_card() { return(card); }
 	public Location get_location() { return(location); }
 	public void set_location(Location location) { this.location = location; }

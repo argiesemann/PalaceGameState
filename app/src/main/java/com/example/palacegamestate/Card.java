@@ -17,6 +17,13 @@ public class Card
 //		this.image = image;
 	}
 
+	public Card(Card that)
+	{
+		this.suit = that.suit;
+		this.rank = that.rank;
+//		this.image = that.image;
+	}
+
 	public void draw(Canvas c)
 	{
 		// TODO: Draw the Card's BitmapDrawable
