@@ -4,6 +4,7 @@ import android.util.Log;
 
 /**
  * @author Maximilian
+ * @author Andres Giesemann
  * <p>
  * This class combines both a card object and a location enumeration to create a pair object. These
  * pair objects simply represent the both a card and where it is in the game.
@@ -40,6 +41,11 @@ public class Pair
 		this.location = location;
 	}//END: set_location() method
 
+	/**
+	 * Represents a Pair object with a string by listing the card and its location
+	 *
+	 * @return String representation of Pair object
+	 */
 	@Override
 	public String toString() {
 

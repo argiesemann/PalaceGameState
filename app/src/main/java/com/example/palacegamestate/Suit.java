@@ -7,8 +7,8 @@ import android.util.Log;
  * <p>
  * This class is an enumeration for the Card.java class. It represents the suit of a card object. The
  * only reason there are integers associated with the various suit enumerations, is because it allows
- * us to create the GameState deck of cards using nexted for loops (see "initialize_the_deck()" in
- * GameState.java for an example).
+ * us to create the PalaceGameState deck of cards using nexted for loops (see "initialize_the_deck()" in
+ * PalaceGameState.java for an example).
  */
 public enum Suit
 {

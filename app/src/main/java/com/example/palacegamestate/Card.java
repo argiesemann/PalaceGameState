@@ -8,7 +8,7 @@ import android.util.Log;
  * @author Maximilian
  * <p>
  * This class combines both a suit and rank enumeration to create a card object. These card objects
- * represent the card objects in the GameState.java class, and in the future we plan to include these
+ * represent the card objects in the PalaceGameState.java class, and in the future we plan to include these
  * card objects in the CardCountingAI.java class. In the furture, we also plan to include a BitmapDrawable
  * variable, which will link the card object to a .PNG file that is an image of the card that the card
  * object is representing, and a draw() method, which will allow the a card object to draw itself using
