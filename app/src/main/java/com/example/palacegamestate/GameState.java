@@ -146,44 +146,47 @@ public class GameState
 
 	}
 
+    /**
+     * Places all selected cards into the discard pile. Bombs the discard pile (bombDiscardPile()) if
+     * 4 of a kind are on top of the discard pile or a ten is played.
+     *
+     * @param playerID player who called this method,
+     * @return true if cards have been selected for play
+     */
 	public boolean playCards(int playerID)
 	{
-		for (int i = 0; i < selectedCards.size(); i++)
-		{
-			discardPile.add(selectedCards.get(i));
-		}
+	    if (selectedCards.size() != 0) {
+            for (int i = 0; i < selectedCards.size(); i++) {
+                discardPile.add(selectedCards.get(i));
+            }
 
-		for (Pair p : the_deck)
-		{
-			if (selectedCards.contains(p))
-			{
-				p.set_location(Location.DISCARD_PILE);
-			}
-		}
+            for (Pair p : the_deck) {
+                if (selectedCards.contains(p)) {
+                    p.set_location(Location.DISCARD_PILE);
+                }
+            }
 
-		selectedCards.clear();
+            selectedCards.clear();
 
-		//bomb the discard pile if there at least 4 cards and the top four are of the same rank
-		if (discardPile.size() >= 4)
-		{
-			if     (discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 2).get_card().get_rank() &&
-					discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 3).get_card().get_rank() &&
-					discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 4).get_card().get_rank() ||
-					discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TEN)
-			{
-				bombDiscardPile();
-			}
-		}
+            //bomb the discard pile if there at least 4 cards and the top four are of the same rank
+            if (discardPile.size() >= 4) {
+                if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 2).get_card().get_rank() &&
+                        discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 3).get_card().get_rank() &&
+                        discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 4).get_card().get_rank() ||
+                        discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TEN) {
+                    bombDiscardPile();
+                }
+            }
+            return true;
+        }
 		return false;
 	}
 
 	/**
-	 * changePalace
-	 * method to let the user change their palace at the beginning of the
-	 * game
+	 * Places cards from player's upper palace to their hand.
 	 *
-	 * @param playerID
-	 * @return
+	 * @param playerID player who called this method
+	 * @return true if called by a valid player
 	 */
 	public boolean changePalace(int playerID)
 	{
@@ -196,7 +199,6 @@ public class GameState
 				if (p.get_location() == Location.PLAYER_ONE_UPPER_PALACE)
 				{
 					p.set_location(Location.PLAYER_ONE_HAND);
-					return true;
 				}
 			}
 			return true;
@@ -208,7 +210,6 @@ public class GameState
 				if (p.get_location() == Location.PLAYER_TWO_UPPER_PALACE)
 				{
 					p.set_location(Location.PLAYER_TWO_HAND);
-
 				}
 			}
 			return true;
@@ -218,12 +219,10 @@ public class GameState
 
 
 	/**
-	 * confirmPalace
-	 * <p>
-	 * method that lets the user confirm their selected palace
+	 * places selected cards into the upper palace of the player with playerID
 	 *
-	 * @param playerID
-	 * @return
+	 * @param playerID player who called this method
+	 * @return true if called by a valid player and there are three selected cards
 	 */
 	public boolean confirmPalace(int playerID)
 	{
@@ -264,9 +263,10 @@ public class GameState
 	/**
 	 * Reassigns location of cards in discard pile to the
 	 * player with the PlayerID passed as parameter.
-	 * @param playerID the playerID of the player who should pick up the
+     *
+	 * @param playerID player who called the method
 	 *
-	 * @return true if the pile was picked up, else false
+	 * @return true if called by a valid player
 	 */
 	public boolean takeDiscardPile(int playerID)
 	{
@@ -308,8 +308,7 @@ public class GameState
 
 
 	/**
-	 * deals cards to the players at the beginning of the game
-	 * @return void.
+	 * Deals cards from DRAW_PILE to palaces and hands of players
 	 */
 	public void dealTheDeck()
 	{
@@ -365,14 +364,20 @@ public class GameState
 		if (discardPile.isEmpty())
 		{
 			return true;
-		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TWO)
+		}
+		//playing a two is always legal
+		else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TWO)
 		{
 			return true;
-		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.SEVEN &&
+		}
+		//cards of equal or lower rank are allowed on top of sevens
+		else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.SEVEN &&
 				  (selectedCard.get_card().get_rank().get_int_value() <= Rank.SEVEN_INT))
 		{
 			return true;
-		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank().get_int_value() <= selectedCard.get_card().get_rank().get_int_value())
+		}
+		//otherwise, a card is only legal if its rank is higher than the top card of the discard pile
+		else if (discardPile.get(discardPile.size() - 1).get_card().get_rank().get_int_value() <= selectedCard.get_card().get_rank().get_int_value())
 		{
 			return true;
 		}
