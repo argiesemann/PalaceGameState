@@ -1,14 +1,12 @@
 /**
  * @author Maximilian Puglielli
+ * @author Andres Giesemann
  */
 package com.example.palacegamestate;
 
 import android.util.Log;
 
 /**
- * @author Maximilian
- * @author Andres Giesemann
- * <p>
  * This class combines both a card object and a location enumeration to create a pair object. These
  * pair objects simply represent the both a card and where it is in the game.
  */
