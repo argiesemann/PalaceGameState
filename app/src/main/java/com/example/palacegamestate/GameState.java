@@ -264,16 +264,12 @@ public class GameState
 	}
 
 	/**
-	 * takeDiscardPile
-	 * <p>
-	 * reassigns location of cards in DISCARD_PILE to the hand of
-	 * the user passed in the parameter. Also clears the discardPile
-	 * ArrayList in GameState
+	 * Reassigns location of cards in discard pile to the
+	 * player with the PlayerID passed as parameter.
+	 * @param playerID the playerID of the player who should pick up the
 	 *
-	 * @return true if discard pile isn't empty and the method was called by a valid player
+	 * @return true if the pile was picked up, else false
 	 */
-	//TODO: Mere, change the location in the Pair class of the cards from the discard ArrayList to the user's hand
-	//TODO: use get location and set location
 	public boolean takeDiscardPile(int playerID)
 	{
 
@@ -310,15 +306,14 @@ public class GameState
 			}
 		}
 		return false;
-	}//takeDiscardPile
+	}
 
 
 	/**
-	 * dealTheDeck method that draws cards in for the hands
-	 *
-	 * @param
+	 * deals cards to the players at the beginning of the game
+	 * @return void.
 	 */
-	//this method is done
+
 	public void dealTheDeck()
 	{
 
@@ -359,8 +354,15 @@ public class GameState
 		}
 
 
-	}//dealTheDeck
+	}
 
+	/**
+	 * Checks if playing the selected card is legal according to the rules of Palace
+	 *
+	 * @param selectedCard the card that is selected
+	 *
+	 * @return true if the move is legal, else false
+	 */
 	private boolean isLegal(Pair selectedCard)
 	{
 		if (discardPile.isEmpty())
@@ -381,7 +383,7 @@ public class GameState
 	}
 
 	/**
-	 * Empties the discardPile ArrayList, all cards in pair list with location DiscardPile get changed to Trash pile
+	 * Removes the discardPile from play by moving it to the dead pile.
 	 */
 	private void bombDiscardPile()
 	{
@@ -395,9 +397,14 @@ public class GameState
 		}
 	}
 
+	/**
+	 * Creates a String representation of the results of the Use Case methods.
+	 *
+	 * @return A string representation of the result of the Use Case methods.
+	 */
 	public String toString()
 	{
-		//TODO implement toString method which converts all of GameState's data to a String
+
 		String gameStateString = "";
 
 		gameStateString += "Turn is: " + turn + "\n";
