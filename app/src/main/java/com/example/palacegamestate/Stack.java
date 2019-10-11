@@ -12,22 +12,6 @@ public class Stack
 			this.data = data;
 			this.next = null;
 		}
-
-/*		public Pair get_data()
-		{
-			return this.data;
-		}
-
-		public StackNode go_to_next()
-		{
-			return this.next;
-		}
-
-		public void set_next(StackNode next)
-		{
-			this.next = next;
-		}
-*/
 	}
 
 	StackNode head;
@@ -60,17 +44,23 @@ public class Stack
 		return this.head.data;
 	}
 
-/*	public boolean peek_4_equals()
+	public boolean are_next_four_equal()
 	{
+		final int FOUR = 4;
 		if (this.head == null)
 			return false;
 		StackNode current = this.head;
-		for (int i = 1; i <= 4 && current.next != null; i++)
+		for (int i = 1; i <= (FOUR - 1); i++)
 		{
-			if (current.data.get_card().get_rank() != current.next.data.get_card().get_rank());
+			if (current.next == null)
+				return false;
+			if (current.data.get_card().get_rank() != current.next.data.get_card().get_rank())
+				return false;
+			current = current.next;
 		}
+		return true;
 	}
-*/
+
 	public boolean is_empty()
 	{
 		return (this.head == null);
