@@ -4,25 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-/*Within the same package as the MainActivity class, create a new game state
-class for your game. (Eventually this class will be a subclass of the GameState class in
-the game framework but it doesn't have to be for this assignment.) Your game state class'
-instance variables should encompass all the information you will need about the current
-state of the game in order to display it properly for a human user or allow a computer
-player to make decisions. Things to consider:
-◦ Information about the resources each player has (e.g., cards, pawns, money)
-◦ Information about the state of any resources (e.g., card is visible, pawn is yellow)
-◦ Whose turn is it?
-◦ Detailed information about shared resources (e.g., the game board, contents of a draw
-pile)
-◦ The visibility of certain information from the perspective of each player
-◦ Current score of each player
-◦ Current state of a timer
-◦ Current state of the dice
-◦ What stage of the game you are at (e.g., setup phase, placement phase, buy phase,
-main play stage, etc.).
-◦ You may need to create additional classes to describe specific elements of the game
-state (e.g., a playing card, a pawn, a tile, etc.)*/
+/**
+ * Data representation of a game of Palace for use with the CS301 Game Framework
+ *
+ * @author Andres Giesemann, Fredrik Olsson, Meredith Marcinko, Maximilian Puglielli
+ */
 public class GameState
 {
 
@@ -35,7 +21,9 @@ public class GameState
 
 
 	/**
-	 * Constructor for the objects in the GameState
+	 * Default Constructor for GameState
+	 *
+	 * Creates a deck of cards, shuffles it and deals it
 	 */
 	public GameState()
 	{
@@ -75,7 +63,7 @@ public class GameState
 	}
 
 	/**
-	 *
+	 * Creates a deck of 52 Pair objects. All Pair objects have initial location of DRAW_PILE
 	 */
 	private void initialize_the_deck()
 	{
@@ -89,22 +77,20 @@ public class GameState
 	}
 
 	/**
-	 * shuffle Deck
-	 * <p>
-	 * Method to shuffle the deck
+	 * Simply shuffles the deck using the shuffle method from Collections
 	 */
-	//function wont be implemented until the arrayList for theDeck is made
 	public void shuffleTheDeck()
 	{
 		Collections.shuffle(the_deck);
 	}
 
-    /* What do the methods do?
-       ◦ verify the move is a legal move for the current game state. If it’s not, return false.
-       ◦ modify the game state to reflect that a given player has taken that action. Then, return true.
-    */
-
-
+	/**
+	 * Adds legal, user-selected cards to the selectedCards ArrayList
+	 *
+	 * @param playerID ID of player who called the method
+	 * @param userSelectedCard card that user attempted to select
+	 * @return true if a card was successfully selected OR deselected
+	 */
 	public boolean selectCards(int playerID, Pair userSelectedCard)
 	{
 		if (isLegal(userSelectedCard))
@@ -115,7 +101,8 @@ public class GameState
 				return true;
 			}
 			//also select the card if the other selected cards are of the same rank
-			else if (!selectedCards.contains(userSelectedCard) && userSelectedCard.get_card().get_rank() == selectedCards.get(selectedCards.size() - 1).get_card().get_rank())
+			else if (!selectedCards.contains(userSelectedCard) &&
+					 userSelectedCard.get_card().get_rank() == selectedCards.get(selectedCards.size() - 1).get_card().get_rank())
 			{
 				selectedCards.add(userSelectedCard);
 				return true;
@@ -131,13 +118,23 @@ public class GameState
 		return false;
 	}
 
+	/**
+	 * Selects cards to be placed into the palace of the player who called the method.
+	 * Different from selectCards because any cards can be legally added to the palace.
+	 *
+	 * @param playerID ID of player who called the method
+	 * @param userSelectedCard card that user attempted to select
+	 * @return true if a card was successfully selected OR deselected
+	 */
 	public boolean selectPalaceCards(int playerID, Pair userSelectedCard){
 
+		//deselects the card if it is already selected
 		if (selectedCards.contains(userSelectedCard)) {
 			selectedCards.remove(userSelectedCard);
 			return true;
 		}
 
+		//selects a card if there are not already three selected cards
 		if (selectedCards.size() < 3) {
 			selectedCards.add(userSelectedCard);
 			return true;
@@ -168,10 +165,10 @@ public class GameState
 		//bomb the discard pile if there at least 4 cards and the top four are of the same rank
 		if (discardPile.size() >= 4)
 		{
-			if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 2).get_card().get_rank()
-					&& discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 3).get_card().get_rank()
-					&& discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 4).get_card().get_rank()
-					|| discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TEN)
+			if     (discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 2).get_card().get_rank() &&
+					discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 3).get_card().get_rank() &&
+					discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 4).get_card().get_rank() ||
+					discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TEN)
 			{
 				bombDiscardPile();
 			}
@@ -369,7 +366,8 @@ public class GameState
 		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TWO)
 		{
 			return true;
-		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.SEVEN && (selectedCard.get_card().get_rank().get_int_value() <= Rank.SEVEN_INT))
+		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.SEVEN &&
+				  (selectedCard.get_card().get_rank().get_int_value() <= Rank.SEVEN_INT))
 		{
 			return true;
 		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank().get_int_value() <= selectedCard.get_card().get_rank().get_int_value())
@@ -397,7 +395,6 @@ public class GameState
 
 	public String toString()
 	{
-		//TODO implement toString method which converts all of GameState's data to a String
 		String gameStateString = "";
 
 		gameStateString += "Turn is: " + turn + "\n";
