@@ -1,3 +1,7 @@
+/**
+ * @author Maximilian
+ *
+ */
 package com.example.palacegamestate;
 
 import android.graphics.Canvas;

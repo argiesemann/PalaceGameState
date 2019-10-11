@@ -1,3 +1,7 @@
+/**
+ * @author Andres Giesemann, Fredrik Olsson, Meredith Marcinko, Maximilian Puglielli
+ *
+ */
 package com.example.palacegamestate;
 
 import android.os.Bundle;

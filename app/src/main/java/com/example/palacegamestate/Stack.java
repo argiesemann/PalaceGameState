@@ -1,3 +1,10 @@
+/**
+ * @author Maximilian
+ *
+ * This class is a Stack data structure, with some extra methods specifically designed for our needs.
+ * We plan to use this for the discard pile, because the discard pile is most easily represented as
+ * as stack.
+ */
 package com.example.palacegamestate;
 
 public class Stack

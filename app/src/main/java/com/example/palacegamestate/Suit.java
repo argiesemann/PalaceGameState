@@ -1,3 +1,8 @@
+/**
+ * @author Maximilian
+ *
+ *
+ */
 package com.example.palacegamestate;
 
 import android.util.Log;
