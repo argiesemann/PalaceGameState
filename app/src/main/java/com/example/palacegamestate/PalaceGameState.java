@@ -9,7 +9,7 @@ import java.util.Collections;
 /**
  * Data representation of a game of Palace for use with the CS301 Game Framework.
  */
-public class GameState
+public class PalaceGameState
 {
 
 	public ArrayList<Pair> the_deck;
@@ -21,11 +21,11 @@ public class GameState
 
 
 	/**
-	 * Default Constructor for GameState
+	 * Default Constructor for PalaceGameState
 	 *
 	 * Creates a deck of cards, shuffles it and deals it
 	 */
-	public GameState()
+	public PalaceGameState()
 	{
 		the_deck = new ArrayList<>();
 		selectedCards = new ArrayList<>();
@@ -42,7 +42,7 @@ public class GameState
 	 *
 	 * @param state The one true state of the game, to be copied
 	 */
-	public GameState(GameState state)
+	public PalaceGameState(PalaceGameState state)
 	{
 		turn = state.turn;
 		the_deck = new ArrayList<>();
@@ -430,4 +430,4 @@ public class GameState
 
 		return gameStateString;
 	}//toString
-}//class GameState
+}//class PalaceGameState

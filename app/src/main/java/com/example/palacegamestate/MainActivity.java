@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * This method listens to a ClickEvent and then
-     * calls all the Use case methods in the GameState class
+     * calls all the Use case methods in the PalaceGameState class
      *
      * @param view
      */
@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         stateDisplay.setText("");
 
-        GameState firstInstance = new GameState();
+        PalaceGameState firstInstance = new PalaceGameState();
 
         //Makes a deep copy of the firstinstance using the copy constructor.
-        GameState secondInstance = new GameState(firstInstance);
+        PalaceGameState secondInstance = new PalaceGameState(firstInstance);
 
 
         firstInstance.changePalace(1);
@@ -96,10 +96,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stateDisplay.append("\n player one picked up the discard pile \n");
 
 
-        GameState thirdInstance = new GameState();
+        PalaceGameState thirdInstance = new PalaceGameState();
 
         //Creates a deep copy of the thirdInstance
-        GameState fourthInstance = new GameState(thirdInstance);
+        PalaceGameState fourthInstance = new PalaceGameState(thirdInstance);
 
         stateDisplay.append("\nNOTE TO GRADER:\nIn our default constructor we shuffle the deck, making the second instance different than the fourth instance." + "\nThis is because the first instance and third instance are created with the default constructor\nwhere they are shuffled differently, then copied over to instances two and four\n");
 
