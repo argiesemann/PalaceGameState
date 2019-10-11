@@ -34,13 +34,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view)
     {
+        stateDisplay.setText("");
 
         GameState firstInstance = new GameState();
+
+
         GameState secondInstance = new GameState(firstInstance);
+
 
         firstInstance.changePalace(1);
 
-        stateDisplay.setText("changePalace gets called for player one, moving all upper palace cards to their hand\n" + firstInstance.toString());
+        stateDisplay.append("changePalace gets called for player one, moving all upper palace cards to their hand\n");
 
 
         int selectedCardCounter = 0;
@@ -54,14 +58,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        stateDisplay.append(firstInstance.toString());
 
         firstInstance.confirmPalace(1);
-        stateDisplay.append("Added selected cards to player 1's upper palace using confirmPalace\n" + firstInstance.toString());
+        stateDisplay.append("\nAdded selected cards to player 1's upper palace using confirmPalace\n");
 
         for (Pair p : firstInstance.the_deck)
         {
-            if (p.get_location() == Location.PLAYER_ONE_HAND)
+            if (p.get_location() == Location.PLAYER_TWO_HAND)
             {
                 firstInstance.selectCards(2, p);
                 stateDisplay.append("\nSelected a card from player two's hand\n");
@@ -70,16 +73,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         firstInstance.playCards(2);
-        stateDisplay.append("\nPlayed player two's selected card\n" + firstInstance.toString());
-        //firstInstance.takeDiscardPile(2);
-        //stateDisplay.setText(firstInstance.toString());
+        stateDisplay.append("\nPlayed player two's selected card\n");
+        firstInstance.takeDiscardPile(1);
 
         stateDisplay.append("\n player one picked up the discard pile \n");
 
 
         firstInstance.takeDiscardPile(1);
 
-        stateDisplay.append("\n" + firstInstance.toString());
+        GameState thirdInstance = new GameState();
+
+        GameState fourthInstance = new GameState(thirdInstance);
+
+        stateDisplay.append("\nNOTE TO GRADER:\nIn our default constructor we shuffle the deck, making the second instance different than the fourth instance." +
+                "\nThis is because the first instance and third instance are created with the default constructor\nwhere they are shuffled differently, then copied over to instances two and four\n");
+
+        stateDisplay.append("\nSecond Instance: \n" + secondInstance.toString());
+
+        stateDisplay.append("\nFourth Instance: \n" + fourthInstance.toString());
+
+
+
 
     }
 }

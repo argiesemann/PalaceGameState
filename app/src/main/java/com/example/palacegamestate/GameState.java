@@ -60,17 +60,17 @@ public class GameState
 		the_deck = new ArrayList<>();
 
 		for (Pair p : state.the_deck) {
-			the_deck.add(p);
+			the_deck.add(new Pair(p));
 		}
 
 		selectedCards = new ArrayList<>();
 		for (Pair p : state.selectedCards) {
-			selectedCards.add(p);
+			selectedCards.add(new Pair(p));
 		}
 
 		discardPile = new ArrayList<>();
 		for (Pair p : state.discardPile) {
-			discardPile.add(p);
+			discardPile.add(new Pair(p));
 		}
 	}
 
