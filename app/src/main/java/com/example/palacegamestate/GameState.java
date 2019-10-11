@@ -35,7 +35,7 @@ public class GameState
 		turn = 0;
 		dealTheDeck();
 
-	}
+	}//constructor
 
 	/**
 	 * Deep Copy Constructor
@@ -60,7 +60,7 @@ public class GameState
 		for (Pair p : state.discardPile) {
 			discardPile.add(new Pair(p));
 		}
-	}
+	}//deep copy constructor
 
 	/**
 	 * Creates a deck of 52 Pair objects. All Pair objects have initial location of DRAW_PILE
@@ -74,7 +74,7 @@ public class GameState
 				the_deck.add(new Pair(new Card(Rank.int_to_rank(i), Suit.int_to_suit(j)), Location.DRAW_PILE));
 			}
 		}
-	}
+	}//initialize_the_deck
 
 	/**
 	 * Simply shuffles the deck using the shuffle method from Collections
@@ -83,7 +83,7 @@ public class GameState
 	public void shuffleTheDeck()
 	{
 		Collections.shuffle(the_deck);
-	}
+	}//shuffleTheDeck
 
 	/**
 	 * Adds legal, user-selected cards to the selectedCards ArrayList
@@ -117,7 +117,7 @@ public class GameState
 			return false;
 		}
 		return false;
-	}
+	}//selectCards
 
 	/**
 	 * Selects cards to be placed into the palace of the player who called the method.
@@ -143,8 +143,7 @@ public class GameState
 
 		return false;
 
-
-	}
+	}//selectPalaceCards
 
     /**
      * Places all selected cards into the discard pile. Bombs the discard pile (bombDiscardPile()) if
@@ -180,7 +179,7 @@ public class GameState
             return true;
         }
 		return false;
-	}
+	}//playCards
 
 	/**
 	 * Places cards from player's upper palace to their hand.
@@ -215,7 +214,7 @@ public class GameState
 			return true;
 		}
 		return false;
-	}
+	}//changePalace
 
 
 	/**
@@ -258,7 +257,7 @@ public class GameState
 			}
 		}
 		return false;
-	}
+	}//confirmPalace
 
 	/**
 	 * Reassigns location of cards in discard pile to the
@@ -383,7 +382,7 @@ public class GameState
 		}
 
 		return false;
-	}
+	}//isLegal
 
 	/**
 	 * Removes the discardPile from play by moving it to the dead pile.
@@ -398,7 +397,7 @@ public class GameState
 				p.set_location(Location.DEAD_PILE);
 			}
 		}
-	}
+	}//bombDiscardPile
 
 	/**
 	 * Creates a String representation of the results of the Use Case methods.
@@ -433,5 +432,5 @@ public class GameState
 		}
 
 		return gameStateString;
-	}
-}
+	}//toString
+}//class GameState

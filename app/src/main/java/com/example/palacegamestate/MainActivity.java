@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 {
 
 
-    private EditText stateDisplay;//test comment
+    private EditText stateDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stateDisplay = findViewById(R.id.stateDisplay);
 
 
-    }
+    }//onCreate
 
 
     /**
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         GameState firstInstance = new GameState();
 
-        //Makes a deep copy of the firstinstance using the copy constructur.
+        //Makes a deep copy of the firstinstance using the copy constructor.
         GameState secondInstance = new GameState(firstInstance);
 
 
@@ -107,8 +107,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         stateDisplay.append("\nFourth Instance: \n" + fourthInstance.toString());
 
-
-
-
-    }
-}
+    }//onClick
+}//class MainActivity
