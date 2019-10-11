@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 {
 
 
-    private EditText stateDisplay;//test comment
+    private EditText stateDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -21,14 +21,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Connects a Button object to the Button in the XML-file
         Button createState = findViewById(R.id.createState);
         createState.setOnClickListener(this);
 
+        //Connects an EditText-object to the EditText-object in the XML-file
         stateDisplay = findViewById(R.id.stateDisplay);
 
 
-    }
+    }//onCreate
 
+
+    /**
+     * This method listens to a ClickEvent and then
+     * calls all the Use case methods in the GameState class
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view)
     {
@@ -36,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         GameState firstInstance = new GameState();
 
-
+        //Makes a deep copy of the firstinstance using the copy constructor.
         GameState secondInstance = new GameState(firstInstance);
 
 
@@ -45,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stateDisplay.append("changePalace gets called for player one, moving all upper palace cards to their hand\n");
 
 
+        //selects three cards from the palace.
         int selectedCardCounter = 0;
         for(Pair p : firstInstance.the_deck) {
             if (p.get_location() == Location.PLAYER_ONE_HAND && selectedCardCounter < 3) {
@@ -56,10 +66,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-
+        //Confirms the three cards that were selected.
         firstInstance.confirmPalace(1);
         stateDisplay.append("\nAdded selected cards to player 1's upper palace using confirmPalace\n");
 
+
+        //Player 2 selects a card from the player's hand.
         for (Pair p : firstInstance.the_deck)
         {
             if (p.get_location() == Location.PLAYER_TWO_HAND)
@@ -70,17 +82,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+
+        //player two plays the card that was selected.
         firstInstance.playCards(2);
         stateDisplay.append("\nPlayed player two's selected card\n");
+
+        //Player 1 picks up the discard pile
         firstInstance.takeDiscardPile(1);
 
         stateDisplay.append("\n player one picked up the discard pile \n");
 
 
-        firstInstance.takeDiscardPile(1);
-
         GameState thirdInstance = new GameState();
 
+        //Creates a deep copy of the thirdInstance
         GameState fourthInstance = new GameState(thirdInstance);
 
         stateDisplay.append("\nNOTE TO GRADER:\nIn our default constructor we shuffle the deck, making the second instance different than the fourth instance." +
@@ -90,8 +105,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         stateDisplay.append("\nFourth Instance: \n" + fourthInstance.toString());
 
-
-
-
-    }
-}
+    }//onClick
+}//class MainActivity

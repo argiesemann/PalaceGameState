@@ -3,26 +3,12 @@ package com.example.palacegamestate;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/*Within the same package as the MainActivity class, create a new game state
-class for your game. (Eventually this class will be a subclass of the GameState class in
-the game framework but it doesn't have to be for this assignment.) Your game state class'
-instance variables should encompass all the information you will need about the current
-state of the game in order to display it properly for a human user or allow a computer
-player to make decisions. Things to consider:
-◦ Information about the resources each player has (e.g., cards, pawns, money)
-◦ Information about the state of any resources (e.g., card is visible, pawn is yellow)
-◦ Whose turn is it?
-◦ Detailed information about shared resources (e.g., the game board, contents of a draw
-pile)
-◦ The visibility of certain information from the perspective of each player
-◦ Current score of each player
-◦ Current state of a timer
-◦ Current state of the dice
-◦ What stage of the game you are at (e.g., setup phase, placement phase, buy phase,
-main play stage, etc.).
-◦ You may need to create additional classes to describe specific elements of the game
-state (e.g., a playing card, a pawn, a tile, etc.)*/
 
+/**
+ * Data representation of a game of Palace for use with the CS301 Game Framework
+ *
+ * @author Andres Giesemann, Fredrik Olsson, Meredith Marcinko, Maximilian Puglielli
+ */
 public class GameState
 {
 
@@ -35,7 +21,9 @@ public class GameState
 
 
 	/**
-	 * Constructor for the objects in the GameState
+	 * Default Constructor for GameState
+	 *
+	 * Creates a deck of cards, shuffles it and deals it
 	 */
 	public GameState()
 	{
@@ -47,7 +35,7 @@ public class GameState
 		turn = 0;
 		dealTheDeck();
 
-	}
+	}//constructor
 
 	/**
 	 * Deep Copy Constructor
@@ -72,10 +60,10 @@ public class GameState
 		for (Pair p : state.discardPile) {
 			discardPile.add(new Pair(p));
 		}
-	}
+	}//deep copy constructor
 
 	/**
-	 *
+	 * Creates a deck of 52 Pair objects. All Pair objects have initial location of DRAW_PILE
 	 */
 	private void initialize_the_deck()
 	{
@@ -86,25 +74,24 @@ public class GameState
 				the_deck.add(new Pair(new Card(Rank.int_to_rank(i), Suit.int_to_suit(j)), Location.DRAW_PILE));
 			}
 		}
-	}
+	}//initialize_the_deck
 
 	/**
-	 * shuffle Deck
-	 * <p>
-	 * Method to shuffle the deck
+	 * Simply shuffles the deck using the shuffle method from Collections
 	 */
 	//function wont be implemented until the arrayList for theDeck is made
 	public void shuffleTheDeck()
 	{
 		Collections.shuffle(the_deck);
-	}
+	}//shuffleTheDeck
 
-    /* What do the methods do?
-       ◦ verify the move is a legal move for the current game state. If it’s not, return false.
-       ◦ modify the game state to reflect that a given player has taken that action. Then, return true.
-    */
-
-
+	/**
+	 * Adds legal, user-selected cards to the selectedCards ArrayList
+	 *
+	 * @param playerID ID of player who called the method
+	 * @param userSelectedCard card that user attempted to select
+	 * @return true if a card was successfully selected OR deselected
+	 */
 	public boolean selectCards(int playerID, Pair userSelectedCard)
 	{
 		if (isLegal(userSelectedCard))
@@ -115,7 +102,8 @@ public class GameState
 				return true;
 			}
 			//also select the card if the other selected cards are of the same rank
-			else if (!selectedCards.contains(userSelectedCard) && userSelectedCard.get_card().get_rank() == selectedCards.get(selectedCards.size() - 1).get_card().get_rank())
+			else if (!selectedCards.contains(userSelectedCard) &&
+					 userSelectedCard.get_card().get_rank() == selectedCards.get(selectedCards.size() - 1).get_card().get_rank())
 			{
 				selectedCards.add(userSelectedCard);
 				return true;
@@ -129,15 +117,25 @@ public class GameState
 			return false;
 		}
 		return false;
-	}
+	}//selectCards
 
+	/**
+	 * Selects cards to be placed into the palace of the player who called the method.
+	 * Different from selectCards because any cards can be legally added to the palace.
+	 *
+	 * @param playerID ID of player who called the method
+	 * @param userSelectedCard card that user attempted to select
+	 * @return true if a card was successfully selected OR deselected
+	 */
 	public boolean selectPalaceCards(int playerID, Pair userSelectedCard){
 
+		//deselects the card if it is already selected
 		if (selectedCards.contains(userSelectedCard)) {
 			selectedCards.remove(userSelectedCard);
 			return true;
 		}
 
+		//selects a card if there are not already three selected cards
 		if (selectedCards.size() < 3) {
 			selectedCards.add(userSelectedCard);
 			return true;
@@ -145,47 +143,49 @@ public class GameState
 
 		return false;
 
+	}//selectPalaceCards
 
-	}
-
+    /**
+     * Places all selected cards into the discard pile. Bombs the discard pile (bombDiscardPile()) if
+     * 4 of a kind are on top of the discard pile or a ten is played.
+     *
+     * @param playerID player who called this method,
+     * @return true if cards have been selected for play
+     */
 	public boolean playCards(int playerID)
 	{
-		for (int i = 0; i < selectedCards.size(); i++)
-		{
-			discardPile.add(selectedCards.get(i));
-		}
+	    if (selectedCards.size() != 0) {
+            for (int i = 0; i < selectedCards.size(); i++) {
+                discardPile.add(selectedCards.get(i));
+            }
 
-		for (Pair p : the_deck)
-		{
-			if (selectedCards.contains(p))
-			{
-				p.set_location(Location.DISCARD_PILE);
-			}
-		}
+            for (Pair p : the_deck) {
+                if (selectedCards.contains(p)) {
+                    p.set_location(Location.DISCARD_PILE);
+                }
+            }
 
-		selectedCards.clear();
+            selectedCards.clear();
 
-		//bomb the discard pile if there at least 4 cards and the top four are of the same rank
-		if (discardPile.size() >= 4)
-		{
-			if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 2).get_card().get_rank()
-					&& discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 3).get_card().get_rank()
-					&& discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 4).get_card().get_rank()
-					|| discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TEN)
-			{
-				bombDiscardPile();
-			}
-		}
+            //bomb the discard pile if there at least 4 cards and the top four are of the same rank
+            if (discardPile.size() >= 4) {
+                if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 2).get_card().get_rank() &&
+                        discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 3).get_card().get_rank() &&
+                        discardPile.get(discardPile.size() - 1).get_card().get_rank() == discardPile.get(discardPile.size() - 4).get_card().get_rank() ||
+                        discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TEN) {
+                    bombDiscardPile();
+                }
+            }
+            return true;
+        }
 		return false;
-	}
+	}//playCards
 
 	/**
-	 * changePalace
-	 * method to let the user change their palace at the beginning of the
-	 * game
+	 * Places cards from player's upper palace to their hand.
 	 *
-	 * @param playerID
-	 * @return
+	 * @param playerID player who called this method
+	 * @return true if called by a valid player
 	 */
 	public boolean changePalace(int playerID)
 	{
@@ -198,7 +198,6 @@ public class GameState
 				if (p.get_location() == Location.PLAYER_ONE_UPPER_PALACE)
 				{
 					p.set_location(Location.PLAYER_ONE_HAND);
-					return true;
 				}
 			}
 			return true;
@@ -210,22 +209,19 @@ public class GameState
 				if (p.get_location() == Location.PLAYER_TWO_UPPER_PALACE)
 				{
 					p.set_location(Location.PLAYER_TWO_HAND);
-
 				}
 			}
 			return true;
 		}
 		return false;
-	}
+	}//changePalace
 
 
 	/**
-	 * confirmPalace
-	 * <p>
-	 * method that lets the user confirm their selected palace
+	 * places selected cards into the upper palace of the player with playerID
 	 *
-	 * @param playerID
-	 * @return
+	 * @param playerID player who called this method
+	 * @return true if called by a valid player and there are three selected cards
 	 */
 	public boolean confirmPalace(int playerID)
 	{
@@ -261,19 +257,16 @@ public class GameState
 			}
 		}
 		return false;
-	}
+	}//confirmPalace
 
 	/**
-	 * takeDiscardPile
-	 * <p>
-	 * reassigns location of cards in DISCARD_PILE to the hand of
-	 * the user passed in the parameter. Also clears the discardPile
-	 * ArrayList in GameState
+	 * Reassigns location of cards in discard pile to the
+	 * player with the PlayerID passed as parameter.
+     *
+	 * @param playerID player who called the method
 	 *
-	 * @return true if discard pile isn't empty and the method was called by a valid player
+	 * @return true if called by a valid player
 	 */
-	//TODO: Mere, change the location in the Pair class of the cards from the discard ArrayList to the user's hand
-	//TODO: use get location and set location
 	public boolean takeDiscardPile(int playerID)
 	{
 
@@ -314,11 +307,8 @@ public class GameState
 
 
 	/**
-	 * dealTheDeck method that draws cards in for the hands
-	 *
-	 * @param
+	 * Deals cards from DRAW_PILE to palaces and hands of players
 	 */
-	//this method is done
 	public void dealTheDeck()
 	{
 
@@ -361,27 +351,41 @@ public class GameState
 
 	}//dealTheDeck
 
+	/**
+	 * Checks if playing the selected card is legal according to the rules of Palace
+	 *
+	 * @param selectedCard the card that is selected
+	 *
+	 * @return true if the move is legal, else false
+	 */
 	private boolean isLegal(Pair selectedCard)
 	{
 		if (discardPile.isEmpty())
 		{
 			return true;
-		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TWO)
+		}
+		//playing a two is always legal
+		else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.TWO)
 		{
 			return true;
-		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.SEVEN && (selectedCard.get_card().get_rank().get_int_value() <= Rank.SEVEN_INT))
+		}
+		//cards of equal or lower rank are allowed on top of sevens
+		else if (discardPile.get(discardPile.size() - 1).get_card().get_rank() == Rank.SEVEN &&
+				  (selectedCard.get_card().get_rank().get_int_value() <= Rank.SEVEN_INT))
 		{
 			return true;
-		} else if (discardPile.get(discardPile.size() - 1).get_card().get_rank().get_int_value() <= selectedCard.get_card().get_rank().get_int_value())
+		}
+		//otherwise, a card is only legal if its rank is higher than the top card of the discard pile
+		else if (discardPile.get(discardPile.size() - 1).get_card().get_rank().get_int_value() <= selectedCard.get_card().get_rank().get_int_value())
 		{
 			return true;
 		}
 
 		return false;
-	}
+	}//isLegal
 
 	/**
-	 * Empties the discardPile ArrayList, all cards in pair list with location DiscardPile get changed to Trash pile
+	 * Removes the discardPile from play by moving it to the dead pile.
 	 */
 	private void bombDiscardPile()
 	{
@@ -393,12 +397,16 @@ public class GameState
 				p.set_location(Location.DEAD_PILE);
 			}
 		}
-	}
+	}//bombDiscardPile
 
 	@Override
+	/**
+	 * Creates a String representation of the results of the Use Case methods.
+	 *
+	 * @return A string representation of the result of the Use Case methods.
+	 */
 	public String toString()
 	{
-		//TODO implement toString method which converts all of GameState's data to a String
 		String gameStateString = "";
 
 		gameStateString += "Turn is: " + turn + "\n";
@@ -425,5 +433,5 @@ public class GameState
 		}
 
 		return gameStateString;
-	}
-}
+	}//toString
+}//class GameState
