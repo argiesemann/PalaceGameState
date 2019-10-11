@@ -1,13 +1,19 @@
-/**
- * @author Maximilian
- *
- */
 package com.example.palacegamestate;
 
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
+//import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 
+/**
+ * @author Maximilian
+ * <p>
+ * This class combines both a suit and rank enumeration to create a card object. These card objects
+ * represent the card objects in the GameState.java class, and in the future we plan to include these
+ * card objects in the CardCountingAI.java class. In the furture, we also plan to include a BitmapDrawable
+ * variable, which will link the card object to a .PNG file that is an image of the card that the card
+ * object is representing, and a draw() method, which will allow the a card object to draw itself using
+ * the BitmagImage it is linked with.
+ */
 public class Card
 {
 	private Suit suit;
@@ -19,24 +25,26 @@ public class Card
 		this.suit = suit;
 		this.rank = rank;
 //		this.image = image;
-	}
+	}//END: Card() constructor
 
 	public Card(Card that)
 	{
 		this.suit = that.suit;
 		this.rank = that.rank;
 //		this.image = that.image;
-	}
+	}//END: Card() copy constructor
 
 	public void draw(Canvas c)
 	{
 		// TODO: Draw the Card's BitmapDrawable
-	}
+	}//END: draw() method
 
-	public Rank get_rank() {
+	public Rank get_rank()
+	{
 		return this.rank;
-	}
+	}//END: get_rank() method
 
+	@Override
 	public String toString()
 	{
 		String return_str = "";
@@ -105,5 +113,5 @@ public class Card
 				return null;
 		}
 		return(return_str);
-	}
-}
+	}//END: toString() method
+}//END: Card class

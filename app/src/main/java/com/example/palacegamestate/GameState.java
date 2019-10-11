@@ -3,7 +3,6 @@ package com.example.palacegamestate;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 /*Within the same package as the MainActivity class, create a new game state
 class for your game. (Eventually this class will be a subclass of the GameState class in
 the game framework but it doesn't have to be for this assignment.) Your game state class'
@@ -23,6 +22,7 @@ pile)
 main play stage, etc.).
 ◦ You may need to create additional classes to describe specific elements of the game
 state (e.g., a playing card, a pawn, a tile, etc.)*/
+
 public class GameState
 {
 
@@ -395,6 +395,7 @@ public class GameState
 		}
 	}
 
+	@Override
 	public String toString()
 	{
 		//TODO implement toString method which converts all of GameState's data to a String

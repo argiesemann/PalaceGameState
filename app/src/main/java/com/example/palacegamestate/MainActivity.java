@@ -1,7 +1,3 @@
-/**
- * @author Andres Giesemann, Fredrik Olsson, Meredith Marcinko, Maximilian Puglielli
- *
- */
 package com.example.palacegamestate;
 
 import android.os.Bundle;
@@ -10,7 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
+/**
+ * @author Andres Giesemann, Fredrik Olsson, Meredith Marcinko, Maximilian Puglielli
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
 
