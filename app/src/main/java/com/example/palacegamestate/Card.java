@@ -1,3 +1,6 @@
+/**
+ * @author Maximilian Puglielli
+ */
 package com.example.palacegamestate;
 
 import android.graphics.Canvas;
@@ -5,11 +8,9 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 /**
- * @author Maximilian
- * <p>
  * This class combines both a suit and rank enumeration to create a card object. These card objects
  * represent the card objects in the GameState.java class, and in the future we plan to include these
- * card objects in the CardCountingAI.java class. In the furture, we also plan to include a BitmapDrawable
+ * card objects in the CardCountingAI.java class. In the future, we also plan to include a BitmapDrawable
  * variable, which will link the card object to a .PNG file that is an image of the card that the card
  * object is representing, and a draw() method, which will allow the a card object to draw itself using
  * the BitmagImage it is linked with.
@@ -20,6 +21,12 @@ public class Card
 	private Rank rank;
 //	private BitmapDrawable image;
 
+	/**
+	 * Default constructor for the Card.java class.
+	 *
+	 * @param rank
+	 * @param suit
+	 */
 	public Card(Rank rank, Suit suit) /*BitmapDrawable image)*/
 	{
 		this.suit = suit;
@@ -27,6 +34,10 @@ public class Card
 //		this.image = image;
 	}//END: Card() constructor
 
+	/**
+	 * Copy constructor for the Card.java class.
+	 * @param that
+	 */
 	public Card(Card that)
 	{
 		this.suit = that.suit;
@@ -34,16 +45,29 @@ public class Card
 //		this.image = that.image;
 	}//END: Card() copy constructor
 
+	/**
+	 * Method used to draw a card object's associated .PNG.
+	 * @param c
+	 */
 	public void draw(Canvas c)
 	{
 		// TODO: Draw the Card's BitmapDrawable
 	}//END: draw() method
 
+	/**
+	 * Getter method for the rank enumeration, encapsulated by this card object.
+	 * @return
+	 */
 	public Rank get_rank()
 	{
 		return this.rank;
 	}//END: get_rank() method
 
+	/**
+	 * Returns a string including information about both the suit and rank enumerations, encapsulated
+	 * by this card object.
+	 * @return
+	 */
 	@Override
 	public String toString()
 	{

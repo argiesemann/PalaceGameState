@@ -1,10 +1,11 @@
+/**
+ * @author Maximilian Puglielli
+ */
 package com.example.palacegamestate;
 
 import android.util.Log;
 
 /**
- * @author Maximilian
- * <p>
  * This class combines both a card object and a location enumeration to create a pair object. These
  * pair objects simply represent the both a card and where it is in the game.
  */
@@ -13,33 +14,61 @@ public class Pair
 	private Card card;
 	private Location location;
 
+	/**
+	 * Default constructor for the Pair.java class.
+	 *
+	 * @param card
+	 * @param location
+	 */
 	public Pair(Card card, Location location)
 	{
 		this.card = card;
 		this.location = location;
 	}//END: Pair() constructor
 
+	/**
+	 * Copy constructor for the Pair.java class.
+	 * @param that
+	 */
 	public Pair(Pair that)
 	{
 		this.card = new Card(that.card);
 		this.location = that.location;
 	}//END: Pair() copy constructor
 
+	/**
+	 * Getter method for the card object, encapsulated by this pair object.
+	 * @return
+	 */
 	public Card get_card()
 	{
-		return card;
+		return this.card;
 	}//END: get_card() method
 
+	/**
+	 * Getter method for the location enumeration, encapsulated by this pair object.
+	 * @return
+	 */
 	public Location get_location()
 	{
-		return location;
+		return this.location;
 	}//END: get_location() method
 
+	/**
+	 * Setter method for the location enumeration, encapsulated by this pair object.
+	 * @param location
+	 */
 	public void set_location(Location location)
 	{
 		this.location = location;
 	}//END: set_location() method
 
+	/**
+	 * Returns a string including information about the suit and rank enumerations, encapsulated
+	 * by this card object, and information about the location enumeration, encapsulated by this pair
+	 * object.
+	 * @return
+	 */
 	@Override
 	public String toString() {
 

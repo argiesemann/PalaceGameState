@@ -1,8 +1,9 @@
+/**
+ * @author Maximilian Puglielli
+ */
 package com.example.palacegamestate;
 
 /**
- * @author Maximilian
- * <p>
  * This class is an enumeration for the Pair.java class. It represents a card object's location in the
  * game.
  */

@@ -1,10 +1,11 @@
+/**
+ * @author Maximilian Puglielli
+ */
 package com.example.palacegamestate;
 
 import android.util.Log;
 
 /**
- * @author Maximilian
- * <p>
  * This class is an enumeration for the Card.java class. It represents the suit of a card object. The
  * integers associated with the various rank enumerations allow us to easily compare whether a card
  * is higher in rank than another card. TWO & TEN have integer values unequal to their number value,
@@ -42,17 +43,32 @@ public enum Rank
 
 	private int int_value;
 
+	/**
+	 * Default constructor for the Rank.java enumeration.
+	 *
+	 * @param int_value
+	 */
 	Rank(int int_value)
 	{
 		this.int_value = int_value;
 	}//END: Rank() enum constructor
 
 
+	/**
+	 * Getter method for the int_value variable.
+	 * @return
+	 */
 	public int get_int_value()
 	{
 		return this.int_value;
 	}//END: get_int_value() method
 
+	/**
+	 * Function which converts an integer into a Rank enum, based on that Rank enum's associated integer
+	 * value, defined in its construction.
+	 * @param num
+	 * @return
+	 */
 	public static Rank int_to_rank(int num)
 	{
 		switch(num)
